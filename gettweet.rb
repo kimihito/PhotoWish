@@ -9,6 +9,15 @@ Twitter.configure do |config|
   config.oauth_token_secret = 'C7iyT5eR5TQSZbGC1QdO6oBMCTw1Jb0u67WJMIy3xmc'
 end
 
-wish = Twitter.search("#photowish -rt",:rpp => 1,:include_entities => 1).results.first.urls[0].expanded_url
+imgurl = Twitter.search("#photowish -rt",:rpp => 1,:include_entities => 1).results.first.urls[0].expanded_url
 
-p wish.class
+image = ''
+
+#TODO 画像にアクセスするURLの関数を作る
+
+if /twitpic/ =~ imgurl
+  url = imgurl.split(/\//)[-1]
+  image = 'http://twitpic.com/show/large/' + url
+end
+
+p image

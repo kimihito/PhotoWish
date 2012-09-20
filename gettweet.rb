@@ -9,20 +9,15 @@ Twitter.configure do |config|
 end
 
 #TODO 画像にアクセスするURLの関数を作る
+  def getimg(hashtag)
+    imgurl = ''
+    imgurl = Twitter.search("#"+hashtag+" -rt",:rpp => 1,:include_entities => 1).results.first.urls[0].expanded_url
 
-def getimg(hashtag)
-  imgurl = ''
-  imgurl = Twitter.search("#"+hashtag+" -rt",:rpp => 1,:include_entities => 1).results.first.urls[0].expanded_url
+    if /twitpic/ =~ imgurl
+      url = imgurl.split(/\//)[-1]
+      image = 'http://twitpic.com/show/large/' + url
+    end
+    #TODO 他の画像投稿サービスを使ってimgを取得する。  
 
-  if /twitpic/ =~ imgurl
-    url = imgurl.split(/\//)[-1]
-    image = 'http://twitpic.com/show/large/' + url
+    return image
   end
-  #TODO 他の画像投稿サービスを使ってimgを取得する。  
-  if 
-  end
-
-  return image
-end
-
-p getimg("photowish")

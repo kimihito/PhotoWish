@@ -25,39 +25,3 @@ def expanded_url?(tweet)
   #ツイートに添付されたすべてのURLの中に,expanded_urlが1つでも含まれていればtrue
   expanded_url(tweet).count != 0
 end
-
-
-
-
-
-#TODO 画像にアクセスするURLの関数を作る
-def getimg(hashtag)
-  imgurl = ''
-  images = []
-  texts = []
-  Twitter.search("#"+hashtag+" -rt",:rpp => 100,:include_entities => 1).results.each do |result|
-    begin
-      texts << result.text
-      imgurl = isexpanded(result)
-      if /twitpic/ =~ imgurl
-        url = imgurl.split(/\//)[-1]
-        images << 'http://twitpic.com/show/large/' + url
-      end
-    rescue
-    end
-  end
-  images
-end
-
-#expanded_urlがあるかどうかを確認する関数
-def isexpanded(result)
-  if result.urls[0].expanded_url == nil
-    nil
-  else
-    result.urls[0].expanded_url
-  end
-end
-
-#TODO 他の画像投稿サービスを使ってimgを取得する。  
-puts getimg("photowish")
-

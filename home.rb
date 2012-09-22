@@ -12,7 +12,7 @@ class Post
   include DataMapper::Resource
   property :id, Serial
   property :status_id, String
-  property :tweet, String
+  property :text, String
   property :imgurl, String
   property :created_at, DateTime
   auto_upgrade!
@@ -27,7 +27,7 @@ get '/' do
     if !Post.first(:status_id => tweet.id.to_s)
      post = Post.create(
        :status_id =>tweet.id,
-       :tweet => text,
+       :text => text,
        :imgurl => image_url(tweet),
        :created_at => Time.now
      ) 
@@ -42,7 +42,8 @@ get '/' do
 end
 
 get '/wish/:id' do
-  @id = params[:id]
+  status_id = params[:id]
+  @post = Post.first(:status_id => status_id.to_s)
   erb :wish
 end
 

@@ -3,11 +3,49 @@
 require 'rubygems'
 require 'sinatra'
 require './gettweet'
+require 'dm-core'
+require 'dm-migrations'
+
+DataMapper.setup(:default,'sqlite3:db.sqlite3')
+
+class Post
+  include DataMapper::Resource
+  property :id, Serial
+  property :status_id, String
+  property :tweet, String
+  property :imgurl, String
+  property :created_at, DateTime
+  auto_upgrade!
+end
 
 get '/' do
-  @tweets = photowish_tweets
+  tweets = photowish_tweets
+  tweets.each do |tweet|
+    text = tweet.text
+    text[/#photowish/] = ""
+    text[/http[s]?\:\/\/[\w\+\$\;\?\.\%\,\!\#\~\*\/\:\@\&\\\=\_\-]+/] = ""
+    if !Post.first(:status_id => tweet.id.to_s)
+     post = Post.create(
+       :status_id =>tweet.id,
+       :tweet => text,
+       :imgurl => image_url(tweet),
+       :created_at => Time.now
+     ) 
+    end
+  end
+
+  @posts = []
+  Post.all.map{ |r|
+    @posts << r
+  }
   erb :index
 end
+
+get '/wish/:id' do
+  @id = params[:id]
+  erb :wish
+end
+
 
 helpers do
   def instagram(url)
@@ -39,6 +77,3 @@ helpers do
     media_check(tweet).select{|u| u}.first
   end
 end
-
-
-

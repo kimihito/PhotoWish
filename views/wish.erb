@@ -1,0 +1,4 @@
+<% @tweets.each do |tweet| %>
+  <img border="0" src="<%=image_url(tweet) %>" height="128" alt="">
+  <%=tweet.text%>
+<%end%>

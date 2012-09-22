@@ -1,4 +1,3 @@
-<% @tweets.each do |tweet| %>
-  <img border="0" src="<%=image_url(tweet) %>" height="128" alt="">
-  <%= tweet.text %>
+<% @posts.each do |post| %>
+  <a href="./wish/<%=post.status_id%>"><img border="0" src="<%=post.imgurl %>" height="128" alt=""></a>
 <%end%>

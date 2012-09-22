@@ -25,3 +25,6 @@ def expanded_url?(tweet)
   #ツイートに添付されたすべてのURLの中に,expanded_urlが1つでも含まれていればtrue
   expanded_url(tweet).count != 0
 end
+
+p photowish_tweets
+

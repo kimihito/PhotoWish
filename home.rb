@@ -16,6 +16,17 @@ class Post
   property :imgurl, String
   property :created_at, DateTime
   auto_upgrade!
+
+  has n, :comments
+end
+
+class Comment
+  include DataMapper::Resource
+  property :id, Serial
+  property :comments, Text
+
+  belongs_to :post
+  auto_upgrade!
 end
 
 get '/' do
@@ -42,11 +53,21 @@ get '/' do
 end
 
 get '/wish/:id' do
-  status_id = params[:id]
-  @post = Post.first(:status_id => status_id.to_s)
+  @status_id = params[:id]
+  @post = Post.first(:status_id => @status_id.to_s)
+  
   erb :wish
 end
 
+post '/wish/:id' do
+  @status_id = params[:id]
+  @post = Post.first(:status_id => @status_id.to_s)
+  comments = @post.comments.create(
+      :comments => params[:comment]
+  )
+  erb :wish
+end
+  
 
 helpers do
   def instagram(url)

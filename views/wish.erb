@@ -1,4 +1,14 @@
 <img border="0" src="<%=@post.imgurl%>" height="128" alt="">
-
+<div>
 <%=@post.text%>
+</div>
+<div>
+<%@post.comments.each do |comment| %>
+  <td><%=comment.comments %><br /></td>
+<%end%>
+<div>
+<form action="/wish/<%=@status_id%>" method="post">
+  <input type="textarea" name="comment">
+  <input type="submit">
+</form>
 

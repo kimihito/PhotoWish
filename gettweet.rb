@@ -3,10 +3,10 @@
 require "twitter"
 
 Twitter.configure do |config|
-  config.consumer_key = '2KMstxQcaqgMRKuPWtiLw'
-  config.consumer_secret = 'Z6nRZHudkuEapsaJNfANko6oUpUJSZ3AQCAfpXwDf6s'
-  config.oauth_token = '98365528-MH0n3QOoLrjb0bIihBZw8KeVAOdimAoIahxWDbiYg'
-  config.oauth_token_secret = 'C7iyT5eR5TQSZbGC1QdO6oBMCTw1Jb0u67WJMIy3xmc'
+  config.consumer_key = 'YOUR_CONSUMER_KEY'
+  config.consumer_secret = 'YOUR_CONSUMER_SECRET'
+  config.oauth_token = 'YOUR_OAUTH_TOKEN'
+  config.oauth_token_secret = 'YOUR_OAUTH_TOKEN_SECRET'
 end
 
 def hashtag_tweet(hashtag)

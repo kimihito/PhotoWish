@@ -1,3 +1,29 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>OurWish</title>
+      <link rel="stylesheet" href="http://127.0.0.1:9393/css/style.css" />
+  </head>
+  <body>
+    <script src="http://127.0.0.1:9393/js/jquery-1.7.1.min.js"></script>
+    <script src="http://127.0.0.1:9393/jquery.isotope.js"></script>
+    <script>
+      $(function(){
+        $("#container").isotope({
+          itemSelector : '.item',
+          masonry : {
+                columnWidth : 240
+                  }
+        });
+      });
+    </script>
+    <div id="container">
 <% @posts.each do |post| %>
+  <div class="item">
   <a href="./wish/<%=post.status_id%>"><img border="0" src="<%=post.imgurl %>" height="128" alt=""></a>
+</div>
 <%end%>
+</div>
+
+</body>
+</html>

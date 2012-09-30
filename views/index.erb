@@ -2,28 +2,31 @@
   <head>
     <meta charset="utf-8">
     <title>OurWish</title>
-      <link rel="stylesheet" href="http://127.0.0.1:9393/css/style.css" />
+    <link rel="stylesheet" href="http://127.0.0.1:9393/isotope/css/style.css" />
+    <link rel="stylesheet" href="http://127.0.0.1:9393/tipsy/src/stylesheets/tipsy.css"></script>
   </head>
   <body>
-    <script src="http://127.0.0.1:9393/js/jquery-1.7.1.min.js"></script>
-    <script src="http://127.0.0.1:9393/jquery.isotope.js"></script>
+    <script src="http://127.0.0.1:9393/isotope/js/jquery-1.7.1.min.js"></script>
+    <script src="http://127.0.0.1:9393/isotope/jquery.isotope.js"></script>
+    <script src="http://127.0.0.1:9393/tipsy/src/javascripts/jquery.tipsy.js"></script>
     <script>
       $(function(){
         $("#container").isotope({
           itemSelector : '.item',
           masonry : {
-                columnWidth : 240
-                  }
+            columnWidth : 240
+          }
         });
+        $("#container .item a").tipsy()
       });
     </script>
     <div id="container">
-<% @posts.each do |post| %>
-  <div class="item">
-  <a href="./wish/<%=post.status_id%>"><img border="0" src="<%=post.imgurl %>" height="128" alt=""></a>
-</div>
-<%end%>
-</div>
+      <% @posts.each do |post| %>
+        <div class="item">
+          <a href="./wish/<%=post.status_id%>" title="<%=post.text%>"><img border="0" src="<%=post.imgurl %>" height="128" ></a>
+        </div>
+    <%end%>
+  </div>
 
 </body>
 </html>

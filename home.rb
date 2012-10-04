@@ -6,7 +6,7 @@ require './gettweet'
 require 'dm-core'
 require 'dm-migrations'
 
-DataMapper.setup(:default,'sqlite3:db.sqlite3')
+DataMapper.setup(:default,ENV['DATABASE_URL'] || 'sqlite3:db.sqlite3')
 
 class Post
   include DataMapper::Resource

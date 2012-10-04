@@ -49,6 +49,11 @@ get '/' do
   Post.all.map{ |r|
     @posts << r
   }
+
+  @posts.reverse!
+
+  @status_id = params[:id]
+  @post = Post.first(:status_id => @status_id.to_s)
   erb :index
 end
 
@@ -68,6 +73,9 @@ post '/wish/:id' do
   erb :wish
 end
   
+get '/hoge' do
+  erb :hoge
+end
 
 helpers do
   def instagram(url)

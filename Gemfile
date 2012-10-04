@@ -1,0 +1,10 @@
+source :rubygems
+gem 'sinatra'
+gem 'dm-core'
+gem 'dm-migrations'
+gem 'dm-postgres-adapter'
+gem 'erubis'
+gem 'thin'
+gem 'pg'
+gem 'twitter'
+gem 'dm-sqlite-adapter'

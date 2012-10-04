@@ -2,31 +2,93 @@
   <head>
     <meta charset="utf-8">
     <title>OurWish</title>
-    <link rel="stylesheet" href="http://127.0.0.1:9393/isotope/css/style.css" />
-    <link rel="stylesheet" href="http://127.0.0.1:9393/tipsy/src/stylesheets/tipsy.css"></script>
+    <link rel="stylesheet" href="http://127.0.0.1:9393/bootstrap/css/bootstrap.min.css">
+    <link href="http://127.0.0.1:9393/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="http://127.0.0.1:9393/isotope/css/style.css" rel="stylesheet">
   </head>
   <body>
     <script src="http://127.0.0.1:9393/isotope/js/jquery-1.7.1.min.js"></script>
-    <script src="http://127.0.0.1:9393/isotope/jquery.isotope.js"></script>
-    <script src="http://127.0.0.1:9393/tipsy/src/javascripts/jquery.tipsy.js"></script>
+    <script src="http://127.0.0.1:9393/bootstrap/js/bootstrap.min.js"></script>
+    <script src="http://127.0.0.1:9393/isotope/jquery.isotope.min.js"></script>
+    <script src="http://127.0.0.1:9393/bootstrap/js/bootstrap-tooltip.js"></script>
+    <script src="http://127.0.0.1:9393/js/jquery.activity-indicator-1.0.0.min.js"></script>
     <script>
       $(function(){
-        $("#container").isotope({
-          itemSelector : '.item',
-          masonry : {
-            columnWidth : 240
-          }
+        $('#wishlist').imagesLoaded(function(){
+          $('#wishlist').isotope({
+            // options
+            itemSelector : '.photo',
+            layoutMode : 'fitRows'
+          }).css("opacity",1).fadeOut(0).fadeIn();
         });
-        $("#container .item a").tipsy()
       });
-    </script>
-    <div id="container">
-      <% @posts.each do |post| %>
-        <div class="item">
-          <a href="./wish/<%=post.status_id%>" title="<%=post.text%>"><img border="0" src="<%=post.imgurl %>" height="128" ></a>
-        </div>
-    <%end%>
-  </div>
+      $(function(){
+        $('a[rel=tooltip]').tooltip({placement:'top'}); 
+        $('.contact-form').live('submit', function() {
+          var modal = $(this).find(".modal");
+          modal.activity()
+          $.ajax({ 
+            type: $(this).attr('method'), 
+            url: this.action, 
+            data: $(this).serialize(),
+            context: this,
+            success: function(data, status) {
+              modal.activity(false);
+              modal.html(data);
+            }
+          });
+          return false;
+        });
+      });
 
-</body>
-</html>
+      </script>
+
+      <div id="page" class="container">
+
+        <header class="page-header">
+        <h1>OurWish <small>idea clipping service</small></h1>
+
+        <div class="description">
+          <p class="lead">
+          <span>Your wish tweet (hashtag: #ourwish ) clipping here.</span>
+          <span>Click image, You can discuss about wish</span>
+          </p>
+        </div>
+        </header>
+
+        <ul id="wishlist" style="opacity:0;">
+          <% @posts.each do |post| %>
+            <li class="photo">
+            <div style="padding: 10px">
+              <span></span>
+              <a data-toggle="modal" href="#<%=post.status_id%>" rel="tooltip" title="<%=post.text%>"><img src="<%=post.imgurl %>"></a>
+            </div>
+            </li>
+          <%end%>
+        </ul>
+      </div>
+      <% @posts.each do |post| %>
+        <form class="contact-form" action="/wish/<%=post.status_id%>" method="post">
+          <div id="<%=post.status_id%>" class="modal hide fade">
+            <div class="modal-header">
+              <a class="close" data-dismiss="modal" >&times;</a>
+              <h3><%=post.text %></h3>
+            </div>
+            <div class="modal-body">
+              <img src="<%=post.imgurl %>" />
+              <p><b>コメント</b></p>
+              <% comment = Post.first(:status_id => post.status_id) %>
+              <%comment.comments.each do |comment| %>
+                <td><%=comment.comments %><br /></td>
+              <%end%>
+              <input type="textarea" name="comment">
+              <input type="submit">
+            </div>
+            <div class="modal-footer">
+              <a href="#" class="btn" data-dismiss="modal" >閉じる</a>
+            </div>
+          </div>
+        </form>
+      <% end %>
+    </body>
+  </html>

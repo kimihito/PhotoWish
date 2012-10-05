@@ -137,7 +137,7 @@ helpers do
   end
 
 
-  #TODO URLが二つ目だった場合の対処法
+#TODO URLが二つ目だった場合の対処法
   def image_url(tweet)
     media_check(tweet).select{|u| u}.first
   end

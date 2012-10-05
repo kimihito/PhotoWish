@@ -36,12 +36,12 @@ get '/' do
     text[/#photowish/] = ""
     text[/http[s]?\:\/\/[\w\+\$\;\?\.\%\,\!\#\~\*\/\:\@\&\\\=\_\-]+/] = ""
     if !Post.first(:status_id => tweet.id.to_s)
-     post = Post.create(
-       :status_id =>tweet.id,
-       :text => text,
-       :imgurl => image_url(tweet),
-       :created_at => Time.now
-     ) 
+#     post = Post.create(
+#       :status_id =>tweet.id,
+#       :text => text,
+#       :imgurl => image_url(tweet),
+#       :created_at => Time.now
+#     ) 
     end
   end
 

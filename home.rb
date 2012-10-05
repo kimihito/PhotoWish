@@ -115,7 +115,9 @@ helpers do
       when /http:\/\/p.twipple.jp/
         twipple(url)
       when /http:\/\/movapic.com/
-        # movapic(url)
+        url = movapic(url)
+        STDOUT.puts "movapic url         :#{url}"
+        STDOUT.puts "movapic url encoding:#{url.encoding}"
       else
         ""
       end

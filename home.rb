@@ -12,8 +12,8 @@ class Post
   include DataMapper::Resource
   property :id, Serial
   property :status_id, String
-  property :text, String
-  property :imgurl, String
+  property :text, String, length: 140
+  property :imgurl, String, length: 1024
   property :created_at, DateTime
   auto_upgrade!
 
@@ -31,7 +31,7 @@ end
 
 get '/' do
   tweets = photowish_tweets
-  tweets.each do |tweet|
+  tweets.reverse.each do |tweet|
     text = tweet.text
     text[/#photowish/] = "" if text[/#photowish/]
     url_regexp = /http[s]?\:\/\/[\w\+\$\;\?\.\%\,\!\#\~\*\/\:\@\&\\\=\_\-]+/
@@ -39,38 +39,30 @@ get '/' do
 
     if !Post.first(:status_id => tweet.id.to_s)
       Post.create(
-        :status_id => tweet.id,
-        :text => text,
-        :imgurl => image_url(tweet),
-        :created_at => Time.now
+         status_id: tweet.id,
+              text: text,
+            imgurl: image_url(tweet),
+        created_at: Time.now
       )
     end
   end
 
-  @posts = []
-  Post.all.map{ |r|
-    @posts << r
-  }
-
-  @posts.reverse!
-
+  @posts = Post.all.reverse
   @status_id = params[:id]
-  @post = Post.first(:status_id => @status_id.to_s)
+  @post = Post.first(status_id: @status_id.to_s)
   erb :index
 end
 
 get '/wish/:id' do
   @status_id = params[:id]
-  @post = Post.first(:status_id => @status_id.to_s)
+  @post = Post.first(status_id: @status_id.to_s)
   erb :wish
 end
 
 post '/wish/:id' do
   @status_id = params[:id]
-  @post = Post.first(:status_id => @status_id.to_s)
-  comments = @post.comments.create(
-      :comments => params[:comment]
-  )
+  @post = Post.first(status_id: @status_id.to_s)
+  comments = @post.comments.create(comments: params[:comment])
   erb :wish
 end
 
@@ -80,41 +72,34 @@ end
 
 helpers do
   def instagram(url)
-    imgurl = ''
     url = url.split(/\//)[-1]
-    imgurl = 'http://instagram.com/p/' + url + 'media/?size=m'
+    "http://instagram.com/p/#{url}media/?size=m"
   end
 
   def yfrog(url)
-    imgurl = ''
     url = url.split(/\//)[-1]
-    imgurl = 'http://yfrog.com/' + url + ':iphone'
+    "http://yfrog.com/#{url}:iphone"
   end
 
   def twitpic(url)
-    imgurl = ''
     url = url.split(/\//)[-1]
-    imgurl = 'http://twitpic.com/show/large/' + url
+    "http://twitpic.com/show/large/#{url}"
   end
 
   def photozo(url)
-    imgurl = ''
     url = url.split(/\//)[-1]
-    imgurl = 'http://photozou.jp/p/img/' + url
+    "http://photozou.jp/p/img/#{url}"
   end
 
   def twipple(url)
-    imgurl = ''
     url = url.split(/\//)[-1]
-    imgurl = 'http://p.twipple.jp/show/large/' + url
+    "http://p.twipple.jp/show/large/#{url}"
   end
 
   def movapic(url)
-    imgurl = ''
     url = url.split(/\//)[-1]
-    imgurl = 'http://image.movapic.com/pic/m_' + url + '.jpeg'
+    "http://image.movapic.com/pic/m_#{url}.jpeg"
   end
-
 
   def media_check(tweet)
     tweet.urls.map{|u|

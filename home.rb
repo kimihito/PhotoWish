@@ -36,11 +36,10 @@ get '/' do
     text[/#photowish/] = "" if text[/#photowish/]
     url_regexp = /http[s]?\:\/\/[\w\+\$\;\?\.\%\,\!\#\~\*\/\:\@\&\\\=\_\-]+/
     text[url_regexp] = "" if text[url_regexp]
+
     if !Post.first(:status_id => tweet.id.to_s)
-      STDOUT.puts "text encoding     : #{text}"
-      STDOUT.puts "image_url encoding: #{image_url(tweet).encoding}"
       Post.create(
-        :status_id =>tweet.id,
+        :status_id => tweet.id,
         :text => text,
         :imgurl => image_url(tweet),
         :created_at => Time.now
@@ -63,7 +62,6 @@ end
 get '/wish/:id' do
   @status_id = params[:id]
   @post = Post.first(:status_id => @status_id.to_s)
-  
   erb :wish
 end
 
@@ -75,7 +73,7 @@ post '/wish/:id' do
   )
   erb :wish
 end
-  
+
 get '/hoge' do
   erb :hoge
 end
@@ -131,16 +129,15 @@ helpers do
         photozo(url)
       when /http:\/\/p.twipple.jp/
         twipple(url)
-      # when /http:\/\/movapic.com/
-      #   movapic(url)
+      when /http:\/\/movapic.com/
+        movapic(url)
       else
         ""
       end
     }
   end
 
-
-#TODO URLが二つ目だった場合の対処法
+  #TODO URLが二つ目だった場合の対処法
   def image_url(tweet)
     media_check(tweet).select{|u| u}.first
   end

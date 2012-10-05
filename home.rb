@@ -103,7 +103,7 @@ helpers do
 
   def media_check(tweet)
     tweet.urls.map{|u|
-      case url = u.expanded_url
+      url = case url = u.expanded_url
       when /http:\/\/twitpic/
         twitpic(url)
       when /http:\/\/instagr.am/
@@ -115,13 +115,13 @@ helpers do
       when /http:\/\/p.twipple.jp/
         twipple(url)
       when /http:\/\/movapic.com/
-        url = movapic(url)
-        STDOUT.puts "movapic url         :#{url}"
-        STDOUT.puts "movapic url encoding:#{url.encoding}"
-        url
+        movapic(url)
       else
         ""
       end
+      STDOUT.puts "media check url         :#{url}"
+      STDOUT.puts "media check url encoding:#{url.encoding}"
+      url
     }
   end
 

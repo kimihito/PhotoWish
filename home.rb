@@ -40,9 +40,9 @@ get '/' do
       STDOUT.puts "text encoding     : #{text}"
       STDOUT.puts "image_url encoding: #{image_url(tweet).encoding}"
       Post.create(
-        :status_id =>tweet.id.to_s.force_encoding('ascii-8bit'),
-        :text => text.force_encoding('ascii-8bit'),
-        :imgurl => image_url(tweet).force_encoding('ascii-8bit'),
+        :status_id =>tweet.id
+        :text => text
+        :imgurl => image_url(tweet)
         :created_at => Time.now
       )
     end
@@ -123,6 +123,16 @@ helpers do
       case url = u.expanded_url
       when /http:\/\/twitpic/
         twitpic(url)
+      when /http:\/\/instagr.am/
+        instagram(url)
+      when /http:\/\/yfrog.com/
+        yfrog(url)
+      when /http:\/\/photozou.jp/
+        photozo(url)
+      when /http:\/\/p.twipple.jp/
+        twipple(url)
+      # when /http:\/\/movapic.com/
+      #   movapic(url)
       else
         ""
       end

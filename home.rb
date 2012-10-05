@@ -123,16 +123,6 @@ helpers do
       case url = u.expanded_url
       when /http:\/\/twitpic/
         twitpic(url)
-      when /http:\/\/instagr.am/
-        instagram(url)
-      when /http:\/\/yfrog.com/
-        yfrog(url)
-      when /http:\/\/photozou.jp/
-        photozo(url)
-      when /http:\/\/p.twipple.jp/
-        twipple(url) 
-      when /http:\/\/movapic.com/
-        movapic(url)
       else
         ""
       end

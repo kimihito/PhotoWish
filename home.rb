@@ -79,7 +79,15 @@ end
 
 helpers do
   def instagram(url)
-    #do something
+    imgurl = ''
+    url = url.split(/\//)[-1]
+    imgurl = 'http://instagram.com/p/' + url + 'media/?size=m'
+  end
+
+  def yfrog(url)
+    imgurl = ''
+    url = url.split(/\//)[-1]
+    imgurl = 'http://yfrog.com/' + url + ':iphone'
   end
 
   def twitpic(url)
@@ -87,6 +95,25 @@ helpers do
     url = url.split(/\//)[-1]
     imgurl = 'http://twitpic.com/show/large/' + url
   end
+  
+  def photozo(url)
+    imgurl = ''
+    url = url.split(/\//)[-1]
+    imgurl = 'http://photozou.jp/p/img/' + url
+  end
+
+  def twipple(url)
+    imgurl = ''
+    url = url.split(/\//)[-1]
+    imgurl = 'http://p.twipple.jp/show/large/' + url
+  end
+
+  def movapic(url)
+    imgurl = ''
+    url = url.split(/\//)[-1]
+    imgurl = 'http://image.movapic.com/pic/m_' + url + '.jpeg'
+  end
+
 
   def media_check(tweet)
     tweet.urls.map{|u| 
@@ -95,6 +122,14 @@ helpers do
         twitpic(url)
       when /http:\/\/instagr.am/
         instagram(url)
+      when /http:\/\/yfrog.com/
+        yfrog(url)
+      when /http:\/\/photozou.jp/
+        photozo(url)
+      when /http:\/\/p.twipple.jp/
+        twipple(url) 
+      when /http:\/\/movapic.com/
+        movapic(url) 
       else
         nil
       end

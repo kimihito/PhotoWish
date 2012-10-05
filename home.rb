@@ -37,14 +37,14 @@ get '/' do
     url_regexp = /http[s]?\:\/\/[\w\+\$\;\?\.\%\,\!\#\~\*\/\:\@\&\\\=\_\-]+/
     text[url_regexp] = "" if text[url_regexp]
     if !Post.first(:status_id => tweet.id.to_s)
-      puts "text encoding     : #{text}"
-      puts "image_url encoding: #{image_url(tweet).encoding}"
+      STDOUT.puts "text encoding     : #{text}"
+      STDOUT.puts "image_url encoding: #{image_url(tweet).encoding}"
       Post.create(
-       :status_id =>tweet.id,
-       :text => text.force_encoding('ascii-8bit'),
-       :imgurl => image_url(tweet).force_encoding('ascii-8bit'),
-       :created_at => Time.now
-     )
+        :status_id =>tweet.id.to_s.force_encoding('ascii-8bit'),
+        :text => text.force_encoding('ascii-8bit'),
+        :imgurl => image_url(tweet).force_encoding('ascii-8bit'),
+        :created_at => Time.now
+      )
     end
   end
 

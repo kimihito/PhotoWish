@@ -115,7 +115,7 @@ helpers do
       when /http:\/\/p.twipple.jp/
         twipple(url)
       when /http:\/\/movapic.com/
-        "http://www.okinawatimes.co.jp/article_images/20121005/IMAG2012100586766_imh_04_r.jpg" #movapic(url)
+        "http://twitpic.com/show/large/az34w3" #movapic(url)
       else
         ""
       end

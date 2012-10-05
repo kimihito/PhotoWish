@@ -115,7 +115,7 @@ helpers do
       when /http:\/\/p.twipple.jp/
         twipple(url)
       when /http:\/\/movapic.com/
-        movapic(url)
+        # movapic(url)
       else
         ""
       end

@@ -118,6 +118,7 @@ helpers do
         url = movapic(url)
         STDOUT.puts "movapic url         :#{url}"
         STDOUT.puts "movapic url encoding:#{url.encoding}"
+        url
       else
         ""
       end

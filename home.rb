@@ -33,15 +33,16 @@ get '/' do
   tweets = photowish_tweets
   tweets.each do |tweet|
     text = tweet.text
-    text[/#photowish/] = ""
-    text[/http[s]?\:\/\/[\w\+\$\;\?\.\%\,\!\#\~\*\/\:\@\&\\\=\_\-]+/] = ""
+    text[/#photowish/] = "" if text[/#photowish/]
+    url_regexp = /http[s]?\:\/\/[\w\+\$\;\?\.\%\,\!\#\~\*\/\:\@\&\\\=\_\-]+/
+    text[url_regexp] = "" if text[url_regexp]
     if !Post.first(:status_id => tweet.id.to_s)
-     post = Post.create(
-       :status_id =>tweet.id,
-       :text => text,
-       :imgurl => image_url(tweet),
-       :created_at => Time.now
-     ) 
+     # post = Post.create(
+     #   :status_id =>tweet.id,
+     #   :text => text,
+     #   :imgurl => image_url(tweet),
+     #   :created_at => Time.now
+     # ) 
     end
   end
 

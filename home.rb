@@ -40,9 +40,9 @@ get '/' do
       STDOUT.puts "text encoding     : #{text}"
       STDOUT.puts "image_url encoding: #{image_url(tweet).encoding}"
       Post.create(
-        :status_id =>tweet.id
-        :text => text
-        :imgurl => image_url(tweet)
+        :status_id =>tweet.id,
+        :text => text,
+        :imgurl => image_url(tweet),
         :created_at => Time.now
       )
     end

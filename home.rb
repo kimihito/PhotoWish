@@ -37,9 +37,9 @@ get '/' do
     text[/http[s]?\:\/\/[\w\+\$\;\?\.\%\,\!\#\~\*\/\:\@\&\\\=\_\-]+/] = ""
     if !Post.first(:status_id => tweet.id.to_s)
      post = Post.create(
-       :status_id =>tweet.id,
-       :text => text,
-       :imgurl => image_url(tweet),
+       :status_id =>tweet.id.force_encoding("utf-8"),
+       :text => text.force_encoding("utf-8"),
+       :imgurl => image_url(tweet).force_encoding("utf-8"),
        :created_at => Time.now
      ) 
     end

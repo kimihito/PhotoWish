@@ -98,7 +98,7 @@ helpers do
     url = url.split(/\//)[-1]
     imgurl = 'http://twitpic.com/show/large/' + url
   end
-  
+
   def photozo(url)
     imgurl = ''
     url = url.split(/\//)[-1]
@@ -119,7 +119,7 @@ helpers do
 
 
   def media_check(tweet)
-    tweet.urls.map{|u| 
+    tweet.urls.map{|u|
       case url = u.expanded_url
       when /http:\/\/twitpic/
         twitpic(url)
@@ -132,11 +132,11 @@ helpers do
       when /http:\/\/p.twipple.jp/
         twipple(url) 
       when /http:\/\/movapic.com/
-        movapic(url) 
+        movapic(url)
       else
-        nil
+        ""
       end
-    }  
+    }
   end
 
 
